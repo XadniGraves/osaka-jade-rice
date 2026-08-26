@@ -10,6 +10,7 @@ windows, coordinated terminals, and a randomized undead Fastfetch gallery.
 - Osaka Jade theme overlay and four 1440p/4K wallpapers
 - Custom Quickshell lock service with password and fingerprint flows
 - Minimal animated “Welcome back, Commander.” overlay after desktop startup
+- Silent five-workspace startup deck with delayed Codex launch
 - Arch Lich lock, screensaver, SDDM, and Plymouth artwork
 - Omarchy shell layout and idle timing
 - Hyprland blur, Kitty opacity, and RuneLite rules
@@ -22,6 +23,7 @@ windows, coordinated terminals, and a randomized undead Fastfetch gallery.
 
 - [Omarchy](https://omarchy.org/) 4.x
 - Git, `jq`, and `rsync` (included with current Omarchy)
+- Spotify, Vesktop, Steam, Kitty, Cava, btop, and Codex for the startup deck
 - `inotify-tools` only if you enable maintainer auto-sync
 
 The terminal setup expects `JetBrainsMono Nerd Font`, which Omarchy installs by
@@ -117,6 +119,24 @@ default. Run `welcome --help` or `welcome -h` for the complete command
 reference. Settings are stored in
 `~/.config/omarchy/welcome.json`; animation timing lives in
 `config/omarchy/plugins/xadni.welcome/Welcome.qml`.
+
+## Startup workspace deck
+
+At each new Hyprland session, the rice silently prepares this layout:
+
+- Workspace 1: Spotify
+- Workspace 2: a left Kitty window split between a shell and Cava, with btop
+  in a second Kitty window on the right
+- Workspace 3: selected immediately; Codex opens in `~/Work` one second after
+  Ghost's welcome animation closes
+- Workspace 4: Vesktop
+- Workspace 5: Steam
+
+Background application rules use silent workspace assignment and suppress
+activation requests, so the desktop stays on workspace 3 during startup.
+Missing optional applications are recorded in
+`~/.local/state/osaka-jade-rice/startup-layout.log` and skipped without
+breaking the rest of the layout.
 
 ## Update another PC
 

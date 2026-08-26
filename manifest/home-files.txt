@@ -1,3 +1,4 @@
 .bashrc
+.local/bin/osaka-startup-layout
 .local/bin/undead-fetch
 .local/bin/welcome

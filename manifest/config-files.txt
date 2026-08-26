@@ -2,9 +2,11 @@ alacritty/alacritty.toml
 fastfetch/config.jsonc
 foot/foot.ini
 ghostty/config
+hypr/autostart.lua
 hypr/hyprland.lua
 hypr/looknfeel.lua
 kitty/kitty.conf
+kitty/startup-workspace-2.session
 omarchy/branding/screensaver.txt
 omarchy/hooks/post-boot.d/show-welcome.hook
 omarchy/shell.json
