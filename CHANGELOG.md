@@ -44,3 +44,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 4 managed path(s) (config/hypr/hyprland.lua,config/hypr/autostart.lua,config/kitty/startup-workspace-2.session,home/.local/bin/osaka-startup-layout)
+
+## [1.3.2] - 2026-08-26
+
+### Changed
+
+- Synced 1 managed path(s) (config/hypr/hyprland.lua)

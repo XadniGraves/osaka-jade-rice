@@ -70,8 +70,23 @@ o.window("(vesktop|Vesktop)", {
   suppress_event = "activate activatefocus",
 })
 
-o.window("steam.*", {
+-- Steam's XWayland self-updater starts with an empty class, so route it by
+-- its initial title before the main Steam window appears.
+o.window({
+  initial_class = "^$",
+  initial_title = "^Steam.*$",
+  xwayland = true,
+}, {
   workspace = "5 silent",
+  no_initial_focus = true,
+  suppress_event = "activate activatefocus",
+})
+
+-- Override Omarchy's floating Steam default with a full-width tiled window.
+o.window({ initial_class = "^[Ss]team$" }, {
+  workspace = "5 silent",
+  tile = true,
+  scrolling_width = 1.0,
   no_initial_focus = true,
   suppress_event = "activate activatefocus",
 })
