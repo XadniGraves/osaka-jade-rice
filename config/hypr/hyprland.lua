@@ -45,7 +45,37 @@ o.window({
   maximize = true,
 })
 
--- Kitty transparency
-o.window("kitty", {
+-- Kitty transparency, including the dedicated startup terminals.
+o.window("(kitty|org\\.omarchy\\.startup-.*)", {
   opacity = "0.88 0.75",
+})
+
+-- Silent startup workspace assignments. Suppressing activation requests keeps
+-- background applications from pulling focus away from workspace 3.
+o.window("(spotify|Spotify)", {
+  workspace = "1 silent",
+  no_initial_focus = true,
+  suppress_event = "activate activatefocus",
+})
+
+o.window("org\\.omarchy\\.startup-(terminal|btop)", {
+  workspace = "2 silent",
+  no_initial_focus = true,
+  suppress_event = "activate activatefocus",
+})
+
+o.window("(vesktop|Vesktop)", {
+  workspace = "4 silent",
+  no_initial_focus = true,
+  suppress_event = "activate activatefocus",
+})
+
+o.window("steam.*", {
+  workspace = "5 silent",
+  no_initial_focus = true,
+  suppress_event = "activate activatefocus",
+})
+
+o.window("org\\.omarchy\\.startup-codex", {
+  workspace = "3 silent",
 })

@@ -1,0 +1,6 @@
+# Left-side workspace 2 terminal: an interactive shell above Cava.
+layout splits
+cd ~
+launch --title "Terminal" --var startup_role=terminal
+launch --location=hsplit --bias=40 --title "Cava" cava
+focus_matching_window var:startup_role=terminal

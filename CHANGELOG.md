@@ -38,3 +38,9 @@ creates a patch release whenever managed rice files change.
 ### Added
 
 - Added Ghost's AI Executive dialogue portrait, quoted welcome text, and portable portrait selection controls.
+
+## [1.3.1] - 2026-08-26
+
+### Changed
+
+- Synced 4 managed path(s) (config/hypr/hyprland.lua,config/hypr/autostart.lua,config/kitty/startup-workspace-2.session,home/.local/bin/osaka-startup-layout)
