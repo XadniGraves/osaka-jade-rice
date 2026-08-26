@@ -1,0 +1,9 @@
+alacritty/alacritty.toml
+fastfetch/config.jsonc
+foot/foot.ini
+ghostty/config
+hypr/hyprland.lua
+hypr/looknfeel.lua
+kitty/kitty.conf
+omarchy/branding/screensaver.txt
+omarchy/shell.json

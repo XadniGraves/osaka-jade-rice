@@ -1,0 +1,16 @@
+# Changelog
+
+This project follows [Semantic Versioning](https://semver.org/). The sync service
+creates a patch release whenever managed rice files change.
+
+## [1.0.0] - 2026-08-26
+
+### Added
+
+- Osaka Jade theme overlay, four wallpapers, and Arch Lich unlock artwork.
+- Custom Omarchy shell layout and cloned lock service.
+- Hyprland blur, Kitty opacity, and RuneLite window rules.
+- Alacritty, Foot, Ghostty, and Kitty terminal configurations.
+- Fastfetch configuration, randomized undead sprite collection, and shell startup integration.
+- Optional primary-machine monitor profile and optional SDDM/Plymouth branding.
+- Backup-aware installer, validation, semantic versioning, and automatic GitHub sync tooling.

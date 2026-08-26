@@ -1,0 +1,14 @@
+usr/share/plymouth/themes/omarchy/bullet.png
+usr/share/plymouth/themes/omarchy/entry.png
+usr/share/plymouth/themes/omarchy/lock.png
+usr/share/plymouth/themes/omarchy/logo.png
+usr/share/plymouth/themes/omarchy/omarchy.script
+usr/share/plymouth/themes/omarchy/progress_bar.png
+usr/share/plymouth/themes/omarchy/progress_box.png
+usr/share/sddm/themes/omarchy/Main.qml
+usr/share/sddm/themes/omarchy/bullet.png
+usr/share/sddm/themes/omarchy/entry-failed.png
+usr/share/sddm/themes/omarchy/entry.png
+usr/share/sddm/themes/omarchy/lock-failed.png
+usr/share/sddm/themes/omarchy/lock.png
+usr/share/sddm/themes/omarchy/logo.png

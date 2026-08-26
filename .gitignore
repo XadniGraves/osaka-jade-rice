@@ -1,0 +1,8 @@
+*.bak
+*.bak.*
+*.log
+*.OMARCHY.original
+*~
+.DS_Store
+.idea/
+.vscode/

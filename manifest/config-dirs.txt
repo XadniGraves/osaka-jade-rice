@@ -1,0 +1,3 @@
+omarchy/backgrounds/osaka-jade
+omarchy/plugins/xadni.lock
+omarchy/themes/osaka-jade

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+SPRITES="$HOME/.local/share/undead-sprites"
+LOGO="$HOME/.config/fastfetch/undead-current.png"
+
+accent_for_sprite() {
+    case "$1" in
+        *revenant_shrine_maiden*)       printf '#E07D83' ;;
+        *drowned_onryo_conductor*)      printf '#63C8C0' ;;
+        *banshee_radio_operator*)       printf '#78C9D8' ;;
+        *jade_vampire_apothecary* | \
+        *undead_tattoo_artist*)         printf '#6DCB8B' ;;
+        *mummified_oracle*)             printf '#D6B56F' ;;
+        *frost_wight_violinist*)        printf '#86CFE8' ;;
+        *ember_kabuki_revenant*)        printf '#E77A48' ;;
+        *amethyst*)                     printf '#B790E8' ;;
+        *rose_gold*)                    printf '#D99BAA' ;;
+        *opaline_moon_moth_wraith*)     printf '#E2CB91' ;;
+        *cinnabar_jiangshi_astrologer*) printf '#D96C57' ;;
+        *orchid_gravebloom_revenant*)   printf '#DE8FD2' ;;
+        *cobalt_witchfire_zombie*)      printf '#6DA4F6' ;;
+        *cinnabar_candle_witch*)        printf '#EF8B4A' ;;
+        *opaline_mirror_ghost*)         printf '#7ED8DC' ;;
+        *)                              printf '#C084FC' ;;
+    esac
+}
+
+sprite="$(find "$SPRITES" -maxdepth 1 -type f \
+  \( -iname '*.png' -o -iname '*.webp' -o -iname '*.jpg' \) \
+  | shuf -n 1)"
+
+if [[ -n "$sprite" ]]; then
+    ln -sf "$sprite" "$LOGO"
+fi
+
+sprite_name="$(basename "$sprite")"
+title_color="$(accent_for_sprite "$sprite_name")"
+
+fastfetch --color-title "$title_color"
