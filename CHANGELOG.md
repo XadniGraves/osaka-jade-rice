@@ -32,3 +32,9 @@ creates a patch release whenever managed rice files change.
 ### Added
 
 - Added the welcome CLI for safely editing, previewing, enabling, disabling, inspecting, and resetting the boot greeting.
+
+## [1.3.0] - 2026-08-26
+
+### Added
+
+- Added Ghost's AI Executive dialogue portrait, quoted welcome text, and portable portrait selection controls.

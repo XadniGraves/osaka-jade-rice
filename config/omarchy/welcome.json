@@ -1,4 +1,5 @@
 {
   "message": "Welcome back, Commander.",
-  "enabled": true
+  "enabled": true,
+  "image": "assets/ghost-ai-executive.png"
 }

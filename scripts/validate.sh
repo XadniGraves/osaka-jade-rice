@@ -19,7 +19,8 @@ version="$(< VERSION)"
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail "VERSION is not semantic: $version"
 
 jq -e . config/omarchy/shell.json >/dev/null
-jq -e '(.message | type == "string" and length > 0 and length <= 80) and (.enabled | type == "boolean")' config/omarchy/welcome.json >/dev/null
+jq -e '(.message | type == "string" and length > 0 and length <= 80) and (.enabled | type == "boolean") and (.image | type == "string")' config/omarchy/welcome.json >/dev/null
+[[ -f config/omarchy/plugins/xadni.welcome/assets/ghost-ai-executive.png ]] || fail "Ghost welcome portrait is missing"
 while IFS= read -r manifest; do
   jq -e . "$manifest" >/dev/null
 done < <(find config/omarchy/plugins -name manifest.json -type f | sort)

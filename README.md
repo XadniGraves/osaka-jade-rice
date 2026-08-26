@@ -91,6 +91,18 @@ Change the message and preview it immediately:
 welcome --edit "Welcome home, Commander."
 ```
 
+The message appears in quotation marks beneath Ghost's AI Executive portrait.
+Choose another local image, hide the portrait, or restore Ghost with:
+
+```bash
+welcome --image "/path/to/portrait.png"
+welcome --no-image
+welcome --reset-image
+```
+
+Custom images are copied into the managed welcome plugin, so the automatic
+sync service includes them in future repository updates and other-PC installs.
+
 Control whether it appears automatically at boot:
 
 ```bash
@@ -99,10 +111,11 @@ welcome --enable
 ```
 
 Manual previews still work while the boot greeting is disabled. Use
-`welcome --get` to print the current text, `welcome --status` to show both the
-message and enabled state, or `welcome --reset` to restore the default. Run
-`welcome --help` or `welcome -h` for the complete command reference. Settings
-are stored in `~/.config/omarchy/welcome.json`; animation timing lives in
+`welcome --get` to print the current text, `welcome --status` to show the
+message, enabled state, and portrait, or `welcome --reset` to restore the
+default. Run `welcome --help` or `welcome -h` for the complete command
+reference. Settings are stored in
+`~/.config/omarchy/welcome.json`; animation timing lives in
 `config/omarchy/plugins/xadni.welcome/Welcome.qml`.
 
 ## Update another PC

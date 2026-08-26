@@ -12,23 +12,39 @@ Item {
   readonly property string home: Quickshell.env("HOME")
   readonly property string configPath: home + "/.config/omarchy/welcome.json"
   readonly property string defaultMessage: "Welcome back, Commander."
+  readonly property string defaultImage: Qt.resolvedUrl("assets/ghost-ai-executive.png").toString()
   property bool surfaceVisible: false
   property bool showAfterConfigLoad: false
   property string welcomeMessage: defaultMessage
+  property string welcomeImage: defaultImage
+  property int imageRevision: 0
   property real lineProgress: 0
 
   readonly property int entranceDuration: 480
   readonly property int holdDuration: 3000
   readonly property int exitDuration: 420
 
+  function resolveImage(value) {
+    var image = String(value || "").replace(/^\s+|\s+$/g, "")
+    if (image === "") return ""
+    if (image.indexOf("file://") === 0 || image.indexOf("://") > 0) return image
+    if (image.indexOf("~/") === 0) return "file://" + home + image.slice(1)
+    if (image.charAt(0) === "/") return "file://" + image
+    return Qt.resolvedUrl(image).toString()
+  }
+
   function applyConfig(raw) {
     try {
       var parsed = JSON.parse(String(raw || ""))
       var next = typeof parsed.message === "string" ? parsed.message : ""
       welcomeMessage = next.replace(/^\s+|\s+$/g, "") || defaultMessage
+      welcomeImage = typeof parsed.image === "string" ? resolveImage(parsed.image) : defaultImage
+      imageRevision += 1
     } catch (error) {
       console.warn("welcome config could not be parsed; using the default message:", error)
       welcomeMessage = defaultMessage
+      welcomeImage = defaultImage
+      imageRevision += 1
     }
   }
 
@@ -41,6 +57,8 @@ Item {
 
   function configLoadFailed() {
     welcomeMessage = defaultMessage
+    welcomeImage = defaultImage
+    imageRevision += 1
     if (!showAfterConfigLoad) return
     showAfterConfigLoad = false
     showWelcome()
@@ -107,6 +125,10 @@ Item {
 
     function message(): string {
       return root.welcomeMessage
+    }
+
+    function image(): string {
+      return root.welcomeImage
     }
   }
 
@@ -210,47 +232,89 @@ Item {
     exclusionMode: ExclusionMode.Ignore
     mask: Region {}
 
-    BorderSurface {
+    Item {
       id: card
 
-      width: Math.min(panel.width - Style.space(48), Math.max(Style.space(370), message.implicitWidth + Style.space(72)))
-      height: Style.space(90)
+      readonly property bool hasPortrait: root.welcomeImage !== ""
+      readonly property real portraitOverlap: Style.space(18)
+
+      width: Math.min(panel.width - Style.space(48), Math.max(Style.space(430), message.implicitWidth + Style.space(72)))
+      height: dialogueBox.height + (hasPortrait ? portrait.height - portraitOverlap : 0)
       anchors.centerIn: parent
       transformOrigin: Item.Center
       transform: Translate { id: lift }
-      color: Util.alpha(Color.background, 0.94)
-      borderSpec: Border.surfaceSpec("popups", "border", Color.accent, Math.max(1, Style.space(1)))
-      radius: Style.cornerRadius
       layer.enabled: root.surfaceVisible
       layer.smooth: true
 
-      Text {
-        id: message
+      Rectangle {
+        id: portraitBackdrop
 
+        visible: card.hasPortrait
+        width: Math.min(card.width - Style.space(84), Style.space(252))
+        height: width
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -Style.space(5)
-        width: parent.width - Style.space(48)
-        text: root.welcomeMessage
-        color: Color.popups.text
-        font.family: Style.font.family
-        font.pixelSize: Style.font.title
-        font.weight: Font.Medium
-        font.letterSpacing: Style.space(0.45)
-        horizontalAlignment: Text.AlignHCenter
-        elide: Text.ElideRight
-        maximumLineCount: 1
-        renderType: Text.NativeRendering
+        anchors.verticalCenter: portrait.verticalCenter
+        radius: width / 2
+        color: Util.alpha(Color.background, 0.38)
+        border.width: Math.max(1, Style.space(1))
+        border.color: Util.alpha(Color.accent, 0.2)
       }
 
-      Rectangle {
-        width: Math.round(Style.space(52) * root.lineProgress)
-        height: Math.max(1, Style.space(1))
+      Image {
+        id: portrait
+
+        visible: card.hasPortrait
+        width: Math.min(card.width - Style.space(24), Style.space(300))
+        height: Style.space(286)
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: message.bottom
-        anchors.topMargin: Style.space(12)
-        color: Color.accent
-        opacity: 0.82
+        anchors.top: parent.top
+        source: card.hasPortrait ? root.welcomeImage + "?revision=" + root.imageRevision : ""
+        fillMode: Image.PreserveAspectFit
+        asynchronous: true
+        cache: false
+        mipmap: true
+        smooth: true
+      }
+
+      BorderSurface {
+        id: dialogueBox
+
+        width: parent.width
+        height: Style.space(96)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        color: Util.alpha(Color.background, 0.94)
+        borderSpec: Border.surfaceSpec("popups", "border", Color.accent, Math.max(1, Style.space(1)))
+        radius: Style.cornerRadius
+
+        Text {
+          id: message
+
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.verticalCenterOffset: -Style.space(5)
+          width: parent.width - Style.space(48)
+          text: "\u201c" + root.welcomeMessage + "\u201d"
+          color: Color.popups.text
+          font.family: Style.font.family
+          font.pixelSize: Style.font.title
+          font.weight: Font.Medium
+          font.letterSpacing: Style.space(0.45)
+          horizontalAlignment: Text.AlignHCenter
+          elide: Text.ElideRight
+          maximumLineCount: 1
+          renderType: Text.NativeRendering
+        }
+
+        Rectangle {
+          width: Math.round(Style.space(52) * root.lineProgress)
+          height: Math.max(1, Style.space(1))
+          anchors.horizontalCenter: parent.horizontalCenter
+          anchors.top: message.bottom
+          anchors.topMargin: Style.space(12)
+          color: Color.accent
+          opacity: 0.82
+        }
       }
     }
   }
