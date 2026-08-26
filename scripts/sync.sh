@@ -35,8 +35,9 @@ managed_status="$(git status --porcelain -- "${managed_paths[@]}")"
 new_version=""
 
 if [[ -n "$managed_status" ]]; then
-  mapfile -t changed_files < <(git status --porcelain -- "${managed_paths[@]}" | sed -E 's/^.. //' | head -n 8)
-  summary="Synced ${#changed_files[@]} managed path(s)"
+  mapfile -t all_changed_files < <(git status --porcelain -- "${managed_paths[@]}" | sed -E 's/^.. //')
+  changed_files=("${all_changed_files[@]:0:8}")
+  summary="Synced ${#all_changed_files[@]} managed path(s)"
   if ((${#changed_files[@]})); then
     joined="$(IFS=', '; echo "${changed_files[*]}")"
     summary+=" ($joined)"

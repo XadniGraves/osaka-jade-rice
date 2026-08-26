@@ -14,3 +14,9 @@ creates a patch release whenever managed rice files change.
 - Fastfetch configuration, randomized undead sprite collection, and shell startup integration.
 - Optional primary-machine monitor profile and optional SDDM/Plymouth branding.
 - Backup-aware installer, validation, semantic versioning, and automatic GitHub sync tooling.
+
+## [1.0.1] - 2026-08-26
+
+### Changed
+
+- Restricted auto-sync to managed rice paths and ignored Fastfetch's random runtime sprite rotation.

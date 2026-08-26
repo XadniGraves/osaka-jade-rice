@@ -51,21 +51,7 @@ snapshot_config() {
 }
 
 snapshot_fastfetch() {
-  local link target selected temporary
-
   copy_dir "$HOME/.local/share/undead-sprites" "$ROOT_DIR/data/undead-sprites"
-  link="$HOME/.config/fastfetch/undead-current.png"
-  [[ -L "$link" ]] || { echo "Fastfetch current-sprite link is missing: $link" >&2; exit 1; }
-  target="$(readlink -f -- "$link")"
-  selected="$(basename -- "$target")"
-  [[ "$target" == "$HOME/.local/share/undead-sprites/"* && -f "$target" ]] || {
-    echo "Fastfetch sprite link points outside the managed sprite directory: $target" >&2
-    exit 1
-  }
-
-  temporary="$(mktemp "$ROOT_DIR/state/.fastfetch-current-sprite.XXXXXX")"
-  printf '%s\n' "$selected" > "$temporary"
-  mv -- "$temporary" "$ROOT_DIR/state/fastfetch-current-sprite"
 }
 
 snapshot_profile() {

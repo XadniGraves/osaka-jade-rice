@@ -9,8 +9,18 @@ command -v inotifywait >/dev/null 2>&1 || {
 }
 
 watch_paths=(
-  "$HOME/.config"
-  "$HOME/.local/bin"
+  "$HOME/.config/alacritty"
+  "$HOME/.config/fastfetch/config.jsonc"
+  "$HOME/.config/foot"
+  "$HOME/.config/ghostty"
+  "$HOME/.config/hypr"
+  "$HOME/.config/kitty"
+  "$HOME/.config/omarchy/backgrounds/osaka-jade"
+  "$HOME/.config/omarchy/branding/screensaver.txt"
+  "$HOME/.config/omarchy/plugins/xadni.lock"
+  "$HOME/.config/omarchy/shell.json"
+  "$HOME/.config/omarchy/themes/osaka-jade"
+  "$HOME/.local/bin/undead-fetch"
   "$HOME/.local/share/undead-sprites"
   "$HOME/.bashrc"
 )
