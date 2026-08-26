@@ -26,3 +26,9 @@ creates a patch release whenever managed rice files change.
 ### Added
 
 - Added a minimal animated Commander welcome overlay triggered by Omarchy's post-boot hook.
+
+## [1.2.0] - 2026-08-26
+
+### Added
+
+- Added the welcome CLI for safely editing, previewing, enabling, disabling, inspecting, and resetting the boot greeting.

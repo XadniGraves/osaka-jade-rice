@@ -9,12 +9,47 @@ Item {
   id: root
 
   property var shell: null
+  readonly property string home: Quickshell.env("HOME")
+  readonly property string configPath: home + "/.config/omarchy/welcome.json"
+  readonly property string defaultMessage: "Welcome back, Commander."
   property bool surfaceVisible: false
+  property bool showAfterConfigLoad: false
+  property string welcomeMessage: defaultMessage
   property real lineProgress: 0
 
   readonly property int entranceDuration: 480
   readonly property int holdDuration: 3000
   readonly property int exitDuration: 420
+
+  function applyConfig(raw) {
+    try {
+      var parsed = JSON.parse(String(raw || ""))
+      var next = typeof parsed.message === "string" ? parsed.message : ""
+      welcomeMessage = next.replace(/^\s+|\s+$/g, "") || defaultMessage
+    } catch (error) {
+      console.warn("welcome config could not be parsed; using the default message:", error)
+      welcomeMessage = defaultMessage
+    }
+  }
+
+  function finishConfigLoad(raw) {
+    applyConfig(raw)
+    if (!showAfterConfigLoad) return
+    showAfterConfigLoad = false
+    showWelcome()
+  }
+
+  function configLoadFailed() {
+    welcomeMessage = defaultMessage
+    if (!showAfterConfigLoad) return
+    showAfterConfigLoad = false
+    showWelcome()
+  }
+
+  function reloadConfig(showAfter) {
+    showAfterConfigLoad = showAfter === true
+    welcomeConfig.reload()
+  }
 
   function showWelcome() {
     holdTimer.stop()
@@ -59,6 +94,30 @@ Item {
     function state(): string {
       return root.surfaceVisible ? "open" : "closed"
     }
+
+    function preview(): string {
+      root.reloadConfig(true)
+      return "ok"
+    }
+
+    function reload(): string {
+      root.reloadConfig(false)
+      return "ok"
+    }
+
+    function message(): string {
+      return root.welcomeMessage
+    }
+  }
+
+  FileView {
+    id: welcomeConfig
+    path: root.configPath
+    watchChanges: true
+    printErrors: false
+    onLoaded: root.finishConfigLoad(text())
+    onLoadFailed: root.configLoadFailed()
+    onFileChanged: reload()
   }
 
   Timer {
@@ -154,7 +213,7 @@ Item {
     BorderSurface {
       id: card
 
-      width: Math.max(Style.space(370), message.implicitWidth + Style.space(72))
+      width: Math.min(panel.width - Style.space(48), Math.max(Style.space(370), message.implicitWidth + Style.space(72)))
       height: Style.space(90)
       anchors.centerIn: parent
       transformOrigin: Item.Center
@@ -171,12 +230,16 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -Style.space(5)
-        text: "Welcome back, Commander."
+        width: parent.width - Style.space(48)
+        text: root.welcomeMessage
         color: Color.popups.text
         font.family: Style.font.family
         font.pixelSize: Style.font.title
         font.weight: Font.Medium
         font.letterSpacing: Style.space(0.45)
+        horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
+        maximumLineCount: 1
         renderType: Text.NativeRendering
       }
 

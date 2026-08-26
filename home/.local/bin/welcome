@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+CONFIG_DIR="$HOME/.config/omarchy"
+CONFIG_FILE="$CONFIG_DIR/welcome.json"
+DEFAULT_MESSAGE="Welcome back, Commander."
+
+usage() {
+  cat <<'EOF'
+Usage:
+  welcome                         Preview the welcome overlay
+  welcome --show                  Preview the welcome overlay
+  welcome --edit "Message"        Save and preview a new message
+  welcome --enable                Enable the automatic boot greeting
+  welcome --disable               Disable the automatic boot greeting
+  welcome --get                   Print the current message
+  welcome --status                Print the enabled state and current message
+  welcome --reset                 Restore the default message and preview it
+  welcome --help, -h              Show this help
+EOF
+}
+
+current_message() {
+  local value=""
+
+  if [[ -f "$CONFIG_FILE" ]]; then
+    value="$(jq -er '.message | select(type == "string")' "$CONFIG_FILE" 2>/dev/null || true)"
+  fi
+  printf '%s\n' "${value:-$DEFAULT_MESSAGE}"
+}
+
+current_enabled() {
+  if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo true
+    return
+  fi
+
+  jq -r 'if .enabled == false then "false" else "true" end' "$CONFIG_FILE" 2>/dev/null || echo true
+}
+
+preview() {
+  if ! omarchy shell -q welcome preview >/dev/null 2>&1; then
+    echo "Message saved, but the welcome plugin is not currently available." >&2
+    echo "It will be used the next time the Omarchy desktop starts." >&2
+  fi
+}
+
+write_config() {
+  local value="$1"
+  local enabled="$2"
+  local temporary
+
+  if [[ -z "${value//[[:space:]]/}" ]]; then
+    echo "Welcome message cannot be empty." >&2
+    exit 2
+  fi
+  if [[ "$value" == *$'\n'* || "$value" == *$'\r'* ]]; then
+    echo "Welcome message must fit on one line." >&2
+    exit 2
+  fi
+  if ((${#value} > 80)); then
+    echo "Welcome message must be 80 characters or fewer." >&2
+    exit 2
+  fi
+
+  mkdir -p -- "$CONFIG_DIR"
+  temporary="$(mktemp "$CONFIG_DIR/.welcome.json.XXXXXX")"
+  trap 'rm -f -- "$temporary"' RETURN
+  jq -n --arg message "$value" --argjson enabled "$enabled" \
+    '{message: $message, enabled: $enabled}' > "$temporary"
+  chmod 0644 "$temporary"
+  mv -- "$temporary" "$CONFIG_FILE"
+  trap - RETURN
+}
+
+save_message() {
+  local value="$1"
+
+  write_config "$value" "$(current_enabled)"
+
+  printf 'Welcome message updated: %s\n' "$value"
+  preview
+}
+
+set_enabled() {
+  local enabled="$1"
+
+  write_config "$(current_message)" "$enabled"
+  if [[ "$enabled" == true ]]; then
+    echo "Welcome enabled for desktop startup."
+    preview
+  else
+    echo "Welcome disabled for desktop startup."
+    omarchy shell -q welcome close >/dev/null 2>&1 || true
+  fi
+}
+
+case "${1:---show}" in
+  --show)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    omarchy shell welcome show
+    ;;
+  --edit|-e)
+    shift
+    (($#)) || { echo "--edit requires a message." >&2; exit 2; }
+    save_message "$*"
+    ;;
+  --get)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    current_message
+    ;;
+  --enable)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    set_enabled true
+    ;;
+  --disable)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    set_enabled false
+    ;;
+  --status)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    printf 'Enabled: %s\n' "$(current_enabled)"
+    printf 'Message: %s\n' "$(current_message)"
+    ;;
+  --reset)
+    [[ $# -le 1 ]] || { usage >&2; exit 2; }
+    save_message "$DEFAULT_MESSAGE"
+    ;;
+  --help|-h)
+    usage
+    ;;
+  *)
+    echo "Unknown option: $1" >&2
+    usage >&2
+    exit 2
+    ;;
+esac

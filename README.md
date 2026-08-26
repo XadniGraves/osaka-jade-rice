@@ -82,10 +82,27 @@ only and does not intercept clicks or keyboard focus.
 Preview it without rebooting:
 
 ```bash
-omarchy shell welcome show
+welcome
 ```
 
-The message and timing live in
+Change the message and preview it immediately:
+
+```bash
+welcome --edit "Welcome home, Commander."
+```
+
+Control whether it appears automatically at boot:
+
+```bash
+welcome --disable
+welcome --enable
+```
+
+Manual previews still work while the boot greeting is disabled. Use
+`welcome --get` to print the current text, `welcome --status` to show both the
+message and enabled state, or `welcome --reset` to restore the default. Run
+`welcome --help` or `welcome -h` for the complete command reference. Settings
+are stored in `~/.config/omarchy/welcome.json`; animation timing lives in
 `config/omarchy/plugins/xadni.welcome/Welcome.qml`.
 
 ## Update another PC

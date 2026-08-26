@@ -8,3 +8,4 @@ kitty/kitty.conf
 omarchy/branding/screensaver.txt
 omarchy/hooks/post-boot.d/show-welcome.hook
 omarchy/shell.json
+omarchy/welcome.json

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "xadni.welcome",
   "name": "Commander Welcome",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Xadni Graves",
   "description": "Minimal animated welcome overlay shown after the desktop boots.",
   "kinds": [

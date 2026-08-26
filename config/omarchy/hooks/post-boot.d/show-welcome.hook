@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Disabling the greeting keeps the plugin available for manual previews while
+# suppressing only its automatic post-boot appearance.
+WELCOME_CONFIG="$HOME/.config/omarchy/welcome.json"
+if [[ -f "$WELCOME_CONFIG" ]] && [[ "$(jq -r 'if .enabled == false then "false" else "true" end' "$WELCOME_CONFIG" 2>/dev/null)" == "false" ]]; then
+  exit 0
+fi
+
 # The shell and plugin registry load asynchronously at login. Retry briefly so
 # the welcome appears reliably without delaying the rest of desktop startup.
 for _attempt in {1..20}; do

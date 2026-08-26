@@ -1,2 +1,3 @@
 .bashrc
 .local/bin/undead-fetch
+.local/bin/welcome
