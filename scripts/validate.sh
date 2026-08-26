@@ -19,7 +19,9 @@ version="$(< VERSION)"
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || fail "VERSION is not semantic: $version"
 
 jq -e . config/omarchy/shell.json >/dev/null
-jq -e . config/omarchy/plugins/xadni.lock/manifest.json >/dev/null
+while IFS= read -r manifest; do
+  jq -e . "$manifest" >/dev/null
+done < <(find config/omarchy/plugins -name manifest.json -type f | sort)
 
 selected_sprite="$(< state/fastfetch-current-sprite)"
 [[ "$selected_sprite" == "$(basename -- "$selected_sprite")" ]] || fail "invalid selected sprite path"

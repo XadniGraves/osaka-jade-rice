@@ -20,3 +20,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Restricted auto-sync to managed rice paths and ignored Fastfetch's random runtime sprite rotation.
+
+## [1.1.0] - 2026-08-26
+
+### Added
+
+- Added a minimal animated Commander welcome overlay triggered by Omarchy's post-boot hook.

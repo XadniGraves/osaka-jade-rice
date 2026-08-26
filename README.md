@@ -9,6 +9,7 @@ windows, coordinated terminals, and a randomized undead Fastfetch gallery.
 
 - Osaka Jade theme overlay and four 1440p/4K wallpapers
 - Custom Quickshell lock service with password and fingerprint flows
+- Minimal animated “Welcome back, Commander.” overlay after desktop startup
 - Arch Lich lock, screensaver, SDDM, and Plymouth artwork
 - Omarchy shell layout and idle timing
 - Hyprland blur, Kitty opacity, and RuneLite rules
@@ -70,6 +71,22 @@ Preview changes without writing anything:
 ```bash
 ./install.sh --dry-run --profile primary --system-branding
 ```
+
+## Welcome overlay
+
+The `xadni.welcome` shell plugin is triggered by Omarchy's `post-boot` hook. It
+enters over 480 ms, holds “Welcome back, Commander.” for three seconds, then
+leaves with the reverse motion over 420 ms. Its full-screen layer is visual
+only and does not intercept clicks or keyboard focus.
+
+Preview it without rebooting:
+
+```bash
+omarchy shell welcome show
+```
+
+The message and timing live in
+`config/omarchy/plugins/xadni.welcome/Welcome.qml`.
 
 ## Update another PC
 

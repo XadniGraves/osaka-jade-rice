@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# The shell and plugin registry load asynchronously at login. Retry briefly so
+# the welcome appears reliably without delaying the rest of desktop startup.
+for _attempt in {1..20}; do
+  if omarchy shell -q welcome show >/dev/null 2>&1; then
+    exit 0
+  fi
+  sleep 0.25
+done
+
+exit 0

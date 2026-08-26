@@ -67,6 +67,9 @@
   "plugins": [
     {
       "id": "xadni.lock"
+    },
+    {
+      "id": "xadni.welcome"
     }
   ],
   "version": 1,
