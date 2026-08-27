@@ -74,3 +74,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (config/omarchy/hooks/post-boot.d/show-welcome.hook)
+
+## [1.3.7] - 2026-08-26
+
+### Changed
+
+- Synced 1 managed path(s) (data/beast-girls/)
