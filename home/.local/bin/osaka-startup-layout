@@ -82,7 +82,7 @@ wait_for_welcome_to_close() {
     sleep 0.25
   done
 
-  echo "Welcome overlay wait timed out; continuing with Codex."
+  echo "Welcome overlay wait timed out; continuing with Herdr."
 }
 
 # Begin on an empty workspace 3. Every other launch is assigned with a silent
@@ -120,17 +120,17 @@ wait_for_welcome_to_close
 sleep 1
 
 launch_client \
-  "org\\.omarchy\\.startup-codex" \
-  "Codex" \
+  "org\\.omarchy\\.startup-herdr" \
+  "Herdr with Codex" \
   kitty \
-  --class org.omarchy.startup-codex \
-  --title "Codex" \
+  --class org.omarchy.startup-herdr \
+  --title "Herdr" \
   --directory "$HOME/Work" \
-  codex
+  herdr
 
-wait_for_client "org\\.omarchy\\.startup-codex" || \
-  echo "Codex did not appear before the timeout."
+wait_for_client "org\\.omarchy\\.startup-herdr" || \
+  echo "Herdr did not appear before the timeout."
 
 hyprctl dispatch 'hl.dsp.focus({ workspace = 3 })' >/dev/null
-hyprctl dispatch 'hl.dsp.focus({ window = "class:org.omarchy.startup-codex" })' >/dev/null 2>&1 || true
+hyprctl dispatch 'hl.dsp.focus({ window = "class:org.omarchy.startup-herdr" })' >/dev/null 2>&1 || true
 echo "$(date --iso-8601=seconds) startup layout complete"

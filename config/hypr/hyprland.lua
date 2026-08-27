@@ -91,6 +91,6 @@ o.window({ initial_class = "^[Ss]team$" }, {
   suppress_event = "activate activatefocus",
 })
 
-o.window("org\\.omarchy\\.startup-codex", {
+o.window("org\\.omarchy\\.startup-herdr", {
   workspace = "3 silent",
 })
