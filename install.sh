@@ -145,6 +145,7 @@ install_fastfetch_assets() {
   local selected_sprite target_link
 
   install_user_dir "$ROOT_DIR/data/undead-sprites" "$HOME/.local/share/undead-sprites"
+  install_user_dir "$ROOT_DIR/data/beast-girls" "$HOME/.local/share/beast-girls"
   selected_sprite="$(< "$ROOT_DIR/state/fastfetch-current-sprite")"
   [[ "$selected_sprite" == "$(basename -- "$selected_sprite")" ]] || {
     echo "Invalid Fastfetch sprite state: $selected_sprite" >&2

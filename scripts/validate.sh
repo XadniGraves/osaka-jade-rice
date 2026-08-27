@@ -29,6 +29,9 @@ selected_sprite="$(< state/fastfetch-current-sprite)"
 [[ "$selected_sprite" == "$(basename -- "$selected_sprite")" ]] || fail "invalid selected sprite path"
 [[ -f "data/undead-sprites/$selected_sprite" ]] || fail "selected sprite is missing"
 
+beast_girl_count="$(find data/beast-girls -maxdepth 1 -type f -name '*.png' | wc -l)"
+((beast_girl_count >= 10)) || fail "beast-girl collection contains fewer than 10 PNG images"
+
 while IFS= read -r relative || [[ -n "$relative" ]]; do
   [[ -n "$relative" && "$relative" != \#* ]] || continue
   [[ -f "config/$relative" ]] || fail "missing config file: $relative"

@@ -1,7 +1,7 @@
 # Osaka Jade Rice
 
 An Osaka Jade Omarchy desktop with a custom Arch Lich lock screen, translucent
-windows, coordinated terminals, and a randomized undead Fastfetch gallery.
+windows, coordinated terminals, and switchable Fastfetch character galleries.
 
 ![Arch Lich lock-screen preview](config/omarchy/themes/osaka-jade/preview-unlock.png)
 
@@ -15,7 +15,7 @@ windows, coordinated terminals, and a randomized undead Fastfetch gallery.
 - Omarchy shell layout and idle timing
 - Hyprland blur, Kitty opacity, and RuneLite rules
 - Alacritty, Foot, Ghostty, and Kitty configs
-- Fastfetch config, `undead-fetch`, and the full undead sprite directory
+- Fastfetch config, `changefetch`, and undead plus beast-girl collections
 - An optional monitor profile for the original machine
 - Safe backups, automatic validation, semantic versions, and maintainer auto-sync
 
@@ -28,6 +28,29 @@ windows, coordinated terminals, and a randomized undead Fastfetch gallery.
 
 The terminal setup expects `JetBrainsMono Nerd Font`, which Omarchy installs by
 default. Fingerprint unlock appears only on systems with an enrolled sensor.
+
+## Fastfetch character collections
+
+Fastfetch selects a random portrait from the active collection whenever a new
+interactive shell opens. The rice starts with the undead collection and also
+installs ten living beast-girl portraits.
+
+Switch to the beast-girl collection:
+
+```bash
+changefetch --collection ~/.local/share/beast-girls
+```
+
+Switch back to the undead collection:
+
+```bash
+changefetch --collection ~/.local/share/undead-sprites
+```
+
+Any directory containing PNG, WebP, JPG, or JPEG images can be used. Run
+`changefetch --show` to print the active collection and currently selected
+image, or run `changefetch` by itself to choose another image immediately.
+The older `undead-fetch` command remains as a compatibility alias.
 
 ## Install
 
@@ -194,13 +217,14 @@ capture them with:
 ## Layout
 
 ```text
-config/              Files installed under ~/.config
-data/undead-sprites/ Fastfetch image gallery installed under ~/.local/share
-home/                Home-directory files and helper commands
-profiles/primary/    Optional machine-specific monitor config
-system/              Optional root-level SDDM/Plymouth overlays
-manifest/            Explicit allowlists used by install and sync scripts
-scripts/             Snapshot, validation, and automatic sync tools
+config/                Files installed under ~/.config
+data/undead-sprites/   Undead Fastfetch collection
+data/beast-girls/      Beast-girl Fastfetch collection
+home/                  Home-directory files and helper commands
+profiles/primary/      Optional machine-specific monitor config
+system/                Optional root-level SDDM/Plymouth overlays
+manifest/              Explicit allowlists used by install and sync scripts
+scripts/               Snapshot, validation, and automatic sync tools
 ```
 
 ## Recovery

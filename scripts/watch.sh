@@ -23,9 +23,11 @@ watch_paths=(
   "$HOME/.config/omarchy/shell.json"
   "$HOME/.config/omarchy/themes/osaka-jade"
   "$HOME/.config/omarchy/welcome.json"
+  "$HOME/.local/bin/changefetch"
   "$HOME/.local/bin/osaka-startup-layout"
   "$HOME/.local/bin/undead-fetch"
   "$HOME/.local/bin/welcome"
+  "$HOME/.local/share/beast-girls"
   "$HOME/.local/share/undead-sprites"
   "$HOME/.bashrc"
 )

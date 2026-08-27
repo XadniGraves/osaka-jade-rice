@@ -52,6 +52,7 @@ snapshot_config() {
 
 snapshot_fastfetch() {
   copy_dir "$HOME/.local/share/undead-sprites" "$ROOT_DIR/data/undead-sprites"
+  copy_dir "$HOME/.local/share/beast-girls" "$ROOT_DIR/data/beast-girls"
 }
 
 snapshot_profile() {

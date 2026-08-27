@@ -8,3 +8,7 @@ with their Wallhaven IDs: `3kgexy`, `3q2zdd`, `lyj56q`, and `vpe9w8`.
 
 The cloned `xadni.lock` service is derived from Omarchy's MIT-licensed
 `omarchy.lock` plugin. Omarchy is copyright its contributors.
+
+The beast-girl Fastfetch portraits were created for this repository with
+OpenAI's `gpt-image-1.5` model and then alpha-normalized for clean terminal
+composition.
