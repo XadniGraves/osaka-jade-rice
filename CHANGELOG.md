@@ -127,3 +127,9 @@ creates a patch release whenever managed rice files change.
 
 - Standardized the new characters around adult human faces with classic anime kemonomimi traits.
 - Raised collection validation to require all 20 beast-girl PNGs.
+
+## [1.5.1] - 2026-08-27
+
+### Changed
+
+- Synced 1 managed path(s) (config/omarchy/shell.json)
