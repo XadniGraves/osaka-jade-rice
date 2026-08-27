@@ -62,3 +62,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 2 managed path(s) (home/.bashrc,home/.local/bin/osaka-startup-layout)
+
+## [1.3.5] - 2026-08-26
+
+### Changed
+
+- Synced 2 managed path(s) (config/hypr/autostart.lua,home/.local/bin/osaka-startup-layout)

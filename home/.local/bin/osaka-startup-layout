@@ -128,8 +128,6 @@ start_codex_in_herdr() {
 # rule so it can populate in the background without stealing focus.
 hyprctl dispatch 'hl.dsp.focus({ workspace = 3 })' >/dev/null
 
-launch_client "(spotify|Spotify)" "Spotify" spotify
-
 if [[ -f "$KITTY_SESSION" ]]; then
   launch_client \
     "org\\.omarchy\\.startup-terminal" \
@@ -151,9 +149,6 @@ launch_client \
   --class org.omarchy.startup-btop \
   --title "btop" \
   btop
-
-launch_client "(vesktop|Vesktop)" "Vesktop" vesktop
-launch_client "steam.*" "Steam" steam
 
 wait_for_welcome_to_close
 sleep 1
