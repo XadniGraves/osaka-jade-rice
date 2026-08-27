@@ -30,7 +30,7 @@ selected_sprite="$(< state/fastfetch-current-sprite)"
 [[ -f "data/undead-sprites/$selected_sprite" ]] || fail "selected sprite is missing"
 
 beast_girl_count="$(find data/beast-girls -maxdepth 1 -type f -name '*.png' | wc -l)"
-((beast_girl_count >= 10)) || fail "beast-girl collection contains fewer than 10 PNG images"
+((beast_girl_count >= 20)) || fail "beast-girl collection contains fewer than 20 PNG images"
 
 while IFS= read -r relative || [[ -n "$relative" ]]; do
   [[ -n "$relative" && "$relative" != \#* ]] || continue

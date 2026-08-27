@@ -33,7 +33,8 @@ default. Fingerprint unlock appears only on systems with an enrolled sensor.
 
 Fastfetch selects a random portrait from the active collection whenever a new
 interactive shell opens. The rice starts with the undead collection and also
-installs ten living beast-girl portraits.
+installs 20 living beast-girl portraits. Each beast-girl image has a transparent
+background and a soft lower-edge fade so it blends cleanly into the terminal.
 
 Switch to the beast-girl collection:
 

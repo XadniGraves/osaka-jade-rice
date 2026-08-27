@@ -116,3 +116,14 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Added a ten-character beast-girl Fastfetch collection and persistent changefetch collection switching.
+
+## [1.5.0] - 2026-08-27
+
+### Added
+
+- Expanded the beast-girl Fastfetch collection from 10 to 20 transparent, lower-edge-faded portraits.
+
+### Changed
+
+- Standardized the new characters around adult human faces with classic anime kemonomimi traits.
+- Raised collection validation to require all 20 beast-girl PNGs.
