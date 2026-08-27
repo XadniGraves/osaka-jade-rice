@@ -98,3 +98,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (data/beast-girls/04_amber_tiger_alchemist-v3.png)
+
+## [1.3.11] - 2026-08-26
+
+### Changed
+
+- Synced 9 managed path(s) (data/beast-girls/03_cobalt_direwolf_knight-v3.png,data/beast-girls/03_cobalt_direwolf_knight.png,data/beast-girls/04_amber_tiger_alchemist-v3.png,data/beast-girls/04_amber_tiger_alchemist.png,data/beast-girls/06_teal_snow_leopard_artificer.png,data/beast-girls/07_crimson_red_panda_duelist.png,data/beast-girls/08_opaline_deer_grove_healer.png,data/beast-girls/09_neon_black_cat_arcane_hacker.png)
