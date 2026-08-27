@@ -80,3 +80,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (data/beast-girls/)
+
+## [1.3.8] - 2026-08-26
+
+### Changed
+
+- Synced 5 managed path(s) (data/beast-girls/01_emerald_lynx_scout-v2.png,data/beast-girls/02_sakura_kitsune_guardian-v2.png,data/beast-girls/03_cobalt_direwolf_knight-v2.png,data/beast-girls/04_amber_tiger_alchemist-v2.png,data/beast-girls/05_lavender_moon_rabbit_astrologer-v2.png)
