@@ -85,6 +85,45 @@ wait_for_welcome_to_close() {
   echo "Welcome overlay wait timed out; continuing with Herdr."
 }
 
+start_codex_in_herdr() {
+  local agent_state=""
+  local pane_id=""
+  local pane_state=""
+  local start_error=""
+
+  for _attempt in {1..30}; do
+    if agent_state="$(herdr agent list 2>/dev/null)"; then
+      if jq -e 'any(.result.agents[]?; .agent == "codex")' <<<"$agent_state" >/dev/null; then
+        echo "Herdr restored an existing Codex agent."
+        return 0
+      fi
+
+      pane_state="$(herdr pane list 2>/dev/null || true)"
+      pane_id="$({
+        jq -r --arg cwd "$HOME/Work" '
+          [.result.panes[]?
+            | select(.agent? == null)
+            | select((.foreground_cwd? // .cwd) == $cwd)]
+          | (map(select(.focused)) + .)
+          | .[0].pane_id // empty
+        ' <<<"$pane_state"
+      } 2>/dev/null)"
+
+      if [[ -n "$pane_id" ]]; then
+        if start_error="$(herdr agent start codex --kind codex --pane "$pane_id" --timeout 5000 2>&1)"; then
+          echo "Started Codex in Herdr pane $pane_id."
+          return 0
+        fi
+      fi
+    fi
+
+    sleep 0.25
+  done
+
+  echo "Codex did not become ready in Herdr: ${start_error:-no available ~/Work shell pane}"
+  return 1
+}
+
 # Begin on an empty workspace 3. Every other launch is assigned with a silent
 # rule so it can populate in the background without stealing focus.
 hyprctl dispatch 'hl.dsp.focus({ workspace = 3 })' >/dev/null
@@ -130,6 +169,8 @@ launch_client \
 
 wait_for_client "org\\.omarchy\\.startup-herdr" || \
   echo "Herdr did not appear before the timeout."
+
+start_codex_in_herdr || true
 
 hyprctl dispatch 'hl.dsp.focus({ workspace = 3 })' >/dev/null
 hyprctl dispatch 'hl.dsp.focus({ window = "class:org.omarchy.startup-herdr" })' >/dev/null 2>&1 || true

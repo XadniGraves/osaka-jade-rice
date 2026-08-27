@@ -13,6 +13,6 @@ source "$OMARCHY_PATH/default/bash/rc"
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 
-if [[ $- == *i* && -z "$TMUX" ]]; then
+if [[ $- == *i* && -z "${TMUX:-}" && "${HERDR_ENV:-}" != 1 ]]; then
     undead-fetch
 fi
