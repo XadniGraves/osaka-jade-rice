@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+DEFAULT_COLLECTION="$HOME/.local/share/undead-sprites"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/osaka-jade-rice"
+COLLECTION_STATE="$STATE_DIR/fastfetch-collection"
+LOGO="$HOME/.config/fastfetch/undead-current.png"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  changefetch
+  changefetch --collection PATH
+  changefetch --show
+
+Options:
+  --collection PATH  Make PATH the active image collection
+  --show             Print the active collection and selected image
+  --no-display       Select an image without running Fastfetch
+  -h, --help         Show this help
+
+With no options, changefetch selects a random image from the active collection
+and runs Fastfetch. The collection choice persists across terminal sessions.
+EOF
+}
+
+accent_for_image() {
+  case "$1" in
+    *revenant_shrine_maiden*)        printf '#E07D83' ;;
+    *drowned_onryo_conductor*)       printf '#63C8C0' ;;
+    *banshee_radio_operator*)        printf '#78C9D8' ;;
+    *jade_vampire_apothecary* | \
+    *undead_tattoo_artist*)          printf '#6DCB8B' ;;
+    *mummified_oracle*)              printf '#D6B56F' ;;
+    *frost_wight_violinist*)         printf '#86CFE8' ;;
+    *ember_kabuki_revenant*)         printf '#E77A48' ;;
+    *amethyst*)                      printf '#B790E8' ;;
+    *rose_gold*)                     printf '#D99BAA' ;;
+    *opaline_moon_moth_wraith*)      printf '#E2CB91' ;;
+    *cinnabar_jiangshi_astrologer*)  printf '#D96C57' ;;
+    *orchid_gravebloom_revenant*)    printf '#DE8FD2' ;;
+    *cobalt_witchfire_zombie*)       printf '#6DA4F6' ;;
+    *cinnabar_candle_witch*)         printf '#EF8B4A' ;;
+    *opaline_mirror_ghost*)          printf '#7ED8DC' ;;
+    *emerald_lynx_scout*)            printf '#56B887' ;;
+    *sakura_kitsune_guardian*)       printf '#E890AE' ;;
+    *cobalt_direwolf_knight*)        printf '#6393ED' ;;
+    *amber_tiger_alchemist*)         printf '#E59A3A' ;;
+    *lavender_moon_rabbit*)          printf '#A88BE8' ;;
+    *teal_snow_leopard_artificer*)   printf '#49C7C7' ;;
+    *crimson_red_panda_duelist*)     printf '#D75A4A' ;;
+    *opaline_deer_grove_healer*)     printf '#8ED6B2' ;;
+    *neon_black_cat_arcane_hacker*)  printf '#3DD6E6' ;;
+    *sunset_fennec_desert_bard*)     printf '#E79B5B' ;;
+    *)                               printf '#C084FC' ;;
+  esac
+}
+
+resolve_collection() {
+  local candidate="$1"
+
+  if [[ "$candidate" == "~" ]]; then
+    candidate="$HOME"
+  elif [[ "$candidate" == "~/"* ]]; then
+    candidate="$HOME/${candidate:2}"
+  fi
+
+  realpath -e -- "$candidate" 2>/dev/null || {
+    echo "Collection does not exist: $1" >&2
+    exit 1
+  }
+}
+
+collection_argument=""
+display=1
+show=0
+
+while (($#)); do
+  case "$1" in
+    --collection)
+      [[ $# -ge 2 ]] || { echo "--collection requires a path" >&2; exit 2; }
+      collection_argument="$2"
+      shift 2
+      ;;
+    --show)
+      show=1
+      shift
+      ;;
+    --no-display)
+      display=0
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+mkdir -p -- "$STATE_DIR" "$(dirname -- "$LOGO")"
+
+if [[ -n "$collection_argument" ]]; then
+  collection="$(resolve_collection "$collection_argument")"
+  [[ -d "$collection" ]] || { echo "Collection is not a directory: $collection" >&2; exit 1; }
+
+  state_temporary="$(mktemp "$STATE_DIR/.fastfetch-collection.XXXXXX")"
+  trap 'rm -f -- "$state_temporary"' EXIT
+  printf '%s\n' "$collection" > "$state_temporary"
+  mv -- "$state_temporary" "$COLLECTION_STATE"
+  trap - EXIT
+elif [[ -r "$COLLECTION_STATE" ]]; then
+  IFS= read -r collection < "$COLLECTION_STATE"
+  if [[ ! -d "$collection" ]]; then
+    echo "Saved Fastfetch collection is unavailable; using the default." >&2
+    collection="$DEFAULT_COLLECTION"
+  fi
+else
+  collection="$DEFAULT_COLLECTION"
+fi
+
+[[ -d "$collection" ]] || { echo "Fastfetch collection is missing: $collection" >&2; exit 1; }
+
+if ((show)); then
+  printf 'Collection: %s\n' "$collection"
+  if [[ -L "$LOGO" ]]; then
+    printf 'Selected:   %s\n' "$(readlink -f -- "$LOGO")"
+  else
+    echo "Selected:   none"
+  fi
+  exit 0
+fi
+
+mapfile -d '' -t images < <(
+  find "$collection" -maxdepth 1 -type f \
+    \( -iname '*.png' -o -iname '*.webp' -o -iname '*.jpg' -o -iname '*.jpeg' \) \
+    -print0 | sort -z
+)
+
+((${#images[@]})) || { echo "Collection contains no supported images: $collection" >&2; exit 1; }
+
+selected_image="${images[RANDOM % ${#images[@]}]}"
+ln -sfn -- "$selected_image" "$LOGO"
+
+((display)) || exit 0
+command -v fastfetch >/dev/null 2>&1 || { echo "fastfetch is not installed" >&2; exit 1; }
+fastfetch --color-title "$(accent_for_image "$(basename -- "$selected_image")")"
