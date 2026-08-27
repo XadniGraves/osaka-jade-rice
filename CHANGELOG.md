@@ -133,3 +133,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (config/omarchy/shell.json)
+
+## [1.5.2] - 2026-08-27
+
+### Changed
+
+- Synced 4 managed path(s) (config/alacritty/alacritty.toml,config/foot/foot.ini,config/ghostty/config,config/kitty/kitty.conf)
