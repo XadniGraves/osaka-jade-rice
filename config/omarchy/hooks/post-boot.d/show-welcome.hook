@@ -7,8 +7,11 @@ if [[ -f "$WELCOME_CONFIG" ]] && [[ "$(jq -r 'if .enabled == false then "false" 
   exit 0
 fi
 
-# The shell and plugin registry load asynchronously at login. Retry briefly so
-# the welcome appears reliably without delaying the rest of desktop startup.
+# Give Hyprland an extra moment to finish presenting the desktop before the
+# greeting appears. The shell and plugin registry also load asynchronously at
+# login, so retry briefly after the delay until the welcome plugin is ready.
+sleep 1
+
 for _attempt in {1..20}; do
   if omarchy shell -q welcome show >/dev/null 2>&1; then
     exit 0
