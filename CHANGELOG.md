@@ -139,3 +139,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 4 managed path(s) (config/alacritty/alacritty.toml,config/foot/foot.ini,config/ghostty/config,config/kitty/kitty.conf)
+
+## [1.5.3] - 2026-08-29
+
+### Changed
+
+- Synced 4 managed path(s) (config/alacritty/alacritty.toml,config/foot/foot.ini,config/ghostty/config,config/kitty/kitty.conf)
