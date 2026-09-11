@@ -163,3 +163,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (config/omarchy/shell.json)
+
+## [1.5.7] - 2026-09-11
+
+### Changed
+
+- Synced 1 managed path(s) (home/.bashrc)

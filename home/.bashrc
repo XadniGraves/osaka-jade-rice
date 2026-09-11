@@ -16,3 +16,5 @@ source "$OMARCHY_PATH/default/bash/rc"
 if [[ $- == *i* && -z "${TMUX:-}" && "${HERDR_ENV:-}" != 1 ]]; then
     undead-fetch
 fi
+
+. "$HOME/.local/share/../bin/env"
