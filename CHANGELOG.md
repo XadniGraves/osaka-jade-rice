@@ -181,3 +181,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (config/omarchy/shell.json)
+
+## [1.5.10] - 2026-09-14
+
+### Changed
+
+- Synced 1 managed path(s) (config/kitty/kitty.conf)
