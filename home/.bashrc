@@ -18,3 +18,7 @@ if [[ $- == *i* && -z "${TMUX:-}" && "${HERDR_ENV:-}" != 1 ]]; then
 fi
 
 . "$HOME/.local/share/../bin/env"
+
+# >>> Codex installer >>>
+export PATH="/home/xadni/.local/bin:$PATH"
+# <<< Codex installer <<<
