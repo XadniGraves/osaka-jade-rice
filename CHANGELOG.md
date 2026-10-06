@@ -211,3 +211,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 1 managed path(s) (data/undead-sprites/blahaus-example3.mp4)
+
+## [1.5.15] - 2026-10-06
+
+### Changed
+
+- Synced 3 managed path(s) (data/undead-sprites/blahaus-example.mp4,data/undead-sprites/blahaus-example2.mp4,data/undead-sprites/blahaus-example3.mp4)
