@@ -217,3 +217,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 3 managed path(s) (data/undead-sprites/blahaus-example.mp4,data/undead-sprites/blahaus-example2.mp4,data/undead-sprites/blahaus-example3.mp4)
+
+## [1.5.16] - 2026-10-09
+
+### Changed
+
+- Synced 6 managed path(s) (config/alacritty/alacritty.toml,config/foot/foot.ini,config/hypr/hyprland.lua,config/omarchy/branding/screensaver.txt,config/omarchy/shell.json,home/.bashrc)

@@ -21,6 +21,7 @@ require("hypr.input")
 require("hypr.bindings")
 require("hypr.looknfeel")
 require("hypr.autostart")
+require("hypr.osrs-theme") -- Old School Omarchy theme pack (wiki keybind, welcome, dynamic colours)
 
 -- Toggle config flags dynamically.
 require("default.hypr.toggles")

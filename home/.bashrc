@@ -22,3 +22,10 @@ fi
 # >>> Codex installer >>>
 export PATH="/home/xadni/.local/bin:$PATH"
 # <<< Codex installer <<<
+# >>> osrs-omarchy >>>
+# Random OSRS boss + system info in every new interactive terminal (osrs-fetch off to disable)
+if [[ $- == *i* && -t 1 && -z ${OSRS_FETCH_SHOWN:-} && -z ${NVIM:-} && ${TERM:-} != dumb ]] && command -v osrs-fetch >/dev/null; then
+  OSRS_FETCH_SHOWN=1
+  osrs-fetch --auto
+fi
+# <<< osrs-omarchy <<<
