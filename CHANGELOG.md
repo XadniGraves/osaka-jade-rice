@@ -223,3 +223,9 @@ creates a patch release whenever managed rice files change.
 ### Changed
 
 - Synced 6 managed path(s) (config/alacritty/alacritty.toml,config/foot/foot.ini,config/hypr/hyprland.lua,config/omarchy/branding/screensaver.txt,config/omarchy/shell.json,home/.bashrc)
+
+## [1.5.17] - 2026-10-09
+
+### Changed
+
+- Synced 1 managed path(s) (home/.bashrc)
